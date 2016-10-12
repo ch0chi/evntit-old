@@ -1,0 +1,10 @@
+Options -Indexes
+RewriteEngine On
+
+RewriteRule ^signup/(\w+)/?$ signup.php?key=$1 [NC,L]
+RewriteRule ^categories/(\w+)/?$ categories.php?category=$1 [NC,L]
+RewriteRule ^eventDetails/(\w+)/(\w+)/?$ eventDetails.php?userID=$1&eventID=$2 [NC,L]
+RewriteRule ^search/(\w+)/(\w+)/(\w+)/?$ search.php?category=$1&state=$2&city=$3 [NC,L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+

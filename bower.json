@@ -1,0 +1,11 @@
+{
+    "name": "Michael_Quattrochi_Portfolio",
+    "version": "1.0.0",
+    "dependencies": {
+        "bootstrap": "latest",
+        "font-awesome": "latest",
+        "animate.css": "latest",
+        "jquery" : "latest",
+        "clipboard":"latest"  
+    }
+}
