@@ -20,9 +20,7 @@ class Admin{
 
 
     public function checkGroupID($username){
-        //left off:
-        //what's happening is your telling it to only get the first user with a groupID that isn't 3.
-        //you need to iterate through all of the available ids
+        
         if($this->getID($username)) {
             $ID = $this->data()->groupID;
             if($ID == 1){
@@ -37,7 +35,7 @@ class Admin{
         if($username){
             $data = $this->_db->get('clientPrivate',array('username','=',$username));
             if($data->count()) {
-                $this->_data = $data->first();//contains users data
+                $this->_data = $data->first();
                 return true;
             }
 
