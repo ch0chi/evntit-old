@@ -14,10 +14,10 @@ class Mail{
         $mail->Host       = "smtp.gmail.com";
         $mail->Port       = 465;
         $mail->AddAddress($email);
-        $mail->Username="mquattrochi@gmail.com";
-        $mail->Password="l2jh432n";
-        $mail->SetFrom('cubesubd.com','CubeSubD');
-        $mail->AddReplyTo("mquattrochi@gmail.com","CubeSubD");
+        $mail->Username="N/A";
+        $mail->Password="N/A";
+        $mail->SetFrom('N/A','N/A');
+        $mail->AddReplyTo("N/A","N/A");
         $mail->Subject    = $subject;
         $mail->MsgHTML($message);
         $mail->Send();
