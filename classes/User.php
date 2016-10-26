@@ -16,7 +16,7 @@ class User{
     }
 
     public function __construct($user=null){
-        //user object can be used to get user data and check if id has been defined
+       
         $this->_db=DB::getInstance();
 
         $this->_sessionName= Config::get('session/session_name');
@@ -26,7 +26,7 @@ class User{
             if(Session::exists($this->_sessionName)){
                 $user= Session::get($this->_sessionName);
 
-                //check if users exists
+                
                 if($this->find($user)){
                     $this->_isLoggedIn = true;
                 }else{
@@ -34,7 +34,7 @@ class User{
                 }
             }
         }else{
-            $this->find($user);//grab data of user that isn't logged in
+            $this->find($user);
         }
     }
 
@@ -46,11 +46,11 @@ class User{
     }
     public function find($user = null){
         if($user){
-            $field = (is_numeric($user)) ? 'id' : 'email';//would fail on users having only numbers for usernames
+            $field = (is_numeric($user)) ? 'id' : 'email';
             $data = $this->_db->get('users',array($field,'=', $user));
 
             if($data->count()){
-                $this->_data=$data->first();//contains users data
+                $this->_data=$data->first();
                 return true;
             }
         }
@@ -58,9 +58,6 @@ class User{
 
     public function login($username=null, $password=null, $remember=false)
     {
-        //check if user exists
-
-        //if password and username haven't been defined and session set then log user in
         if (!$username && !$password && $this->exists()) {
 
             Session::put($this->_sessionName, $this->data()->ID);
@@ -69,7 +66,7 @@ class User{
 
 
             if ($user) {
-                //compare and check password/salt
+              
                 if ($this->data()->password === Hash::make($password, $this->data()->salt)) {
 
                     Session::put($this->_sessionName, $this->data()->ID);//put user id inside of session
@@ -79,7 +76,7 @@ class User{
                         $hash = Hash::unique();
                         $hashCheck = $this->_db->get('usersessions', array('userId', '=', $this->data()->ID));
 
-                        //if hashcheck returns 0
+                       
                         if (!$hashCheck->count()) {
 
                             $this->_db->insert('usersessions', array(
@@ -92,7 +89,7 @@ class User{
 
                         Cookie::put($this->_cookieName, $hash, Config::get('remember/cookie_expiry'));
                     }
-                    //upon successful login
+                  
                     return true;
                 }
             }
@@ -113,7 +110,7 @@ class User{
     }
 
     public function exists(){
-        //check whether data exists
+      
         return (!empty($this->_data)) ? true: false;
     }
 
