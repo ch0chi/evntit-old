@@ -1,5 +1,5 @@
 <?php
-//database wrapper that uses PDO
+
 /**
  * Class DB
  *
@@ -35,9 +35,9 @@ class DB{
      */
     public static function getInstance(){
         if(!isset(self::$_instance)){
-            self::$_instance= new DB();//run the DB class and set instance
+            self::$_instance= new DB();
         }
-        return self::$_instance;//if _instance is set then return current instance
+        return self::$_instance;
     }
 
     /**
@@ -49,12 +49,12 @@ class DB{
      */
     public function query($sql, $params=array()){
         $this->_error=false;
-        //prepare query, if query prepared successfully bind params if exist, otherwise execture query
+        
         if($this->_query=$this->_pdo->prepare($sql)){
             $x=1;
             if(count($params)){
                 foreach($params as $param){
-                    $this->_query->bindValue($x,$param);//bind value of first ? in sql statement to $x
+                    $this->_query->bindValue($x,$param);
                     $x++;
                 }
             }
@@ -84,14 +84,14 @@ class DB{
         if(count($where)===3){
             $operators=array('=','>','<','>=','<=');
 
-            $field = $where[0];//ex. username
-            $operator = $where[1];//ex. =
-            $value = $where[2];//ex. michael
+            $field = $where[0];
+            $operator = $where[1];
+            $value = $where[2];
 
-            //check if operator is in array
+            
             if(in_array($operator,$operators)){
-                //construct query if operators in array
-                $sql = "{$action}  FROM {$table} WHERE {$field} {$operator} ? ";//ex. select * from clients where username = michael
+               
+                $sql = "{$action}  FROM {$table} WHERE {$field} {$operator} ? ";
 
                 if(!$this->query($sql,array($value))->error()){
                     return $this;
@@ -146,20 +146,19 @@ class DB{
      */
     public function insert($table,$fields = array()){
             $keys=array_keys($fields);
-            $values=null;//variable that keeps track of question marks inside query
-            $x = 1;//counter
+            $values=null;
+            $x = 1;
 
             foreach($fields as $field){
-                $values .="?";//add a ? to each value.
-                //check if x is < the count of the fields
-                //check if x is at end of the field
+                $values .="?";
+              
                 if($x<count($fields)){
                     $values.=', ';
                 }
                 $x++;
             }
 
-            $sql="INSERT INTO {$table}(`" . implode('`,`',$keys). "`) VALUES ({$values})";//define fields you want to insert with back-ticks(`)
+            $sql="INSERT INTO {$table}(`" . implode('`,`',$keys). "`) VALUES ({$values})";
             if($this->query($sql, $fields)) {
                 return true;
             }
@@ -226,7 +225,7 @@ class DB{
      * @return DB inserts event into database
      */
     public function createEvent($eventName){
-        $eventName = str_replace(' ', '_', $eventName);//replaces whitespaces with underscores
+        $eventName = str_replace(' ', '_', $eventName);
         return $this->query("CREATE TABLE {$eventName} (ID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, firstName VARCHAR(255), lastName VARCHAR(255), email VARCHAR(255));");
     }
 
